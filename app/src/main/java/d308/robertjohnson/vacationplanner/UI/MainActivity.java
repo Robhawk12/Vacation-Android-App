@@ -1,8 +1,10 @@
-package d308.robertjohnson.vacationplanner;
+package d308.robertjohnson.vacationplanner.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import d308.robertjohnson.vacationplanner.R;
 
 public class MainActivity extends AppCompatActivity {
 
