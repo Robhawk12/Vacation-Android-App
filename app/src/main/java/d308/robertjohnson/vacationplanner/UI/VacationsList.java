@@ -13,9 +13,11 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import d308.robertjohnson.vacationplanner.R;
+import d308.robertjohnson.vacationplanner.data.Repository;
 import d308.robertjohnson.vacationplanner.entities.Vacation;
 
 public class VacationsList extends AppCompatActivity {
+private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +42,11 @@ public class VacationsList extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.sample) {
+            repository=new Repository(getApplication());
+
            // Toast.makeText(VacationsList.this, "put in sample data", Toast.LENGTH_LONG).show();
             Vacation vacation=new Vacation(0,"Hawaii","Beach Surf","01/02/2025","01/10/2025");
-
+            repository.insert(vacation);
             return true;
         }
         if (item.getItemId()==android.R.id.home){

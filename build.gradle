@@ -3,5 +3,5 @@ plugins {
 id 'com.android.application' version '8.2.2' apply false
 }
 ext{
-    roomVersion='2.5.2'
+    roomVersion='2.6.1'
 }
