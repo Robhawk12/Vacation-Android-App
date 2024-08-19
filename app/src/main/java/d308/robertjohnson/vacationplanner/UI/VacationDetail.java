@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import d308.robertjohnson.vacationplanner.R;
 
-public class VacationView extends AppCompatActivity {
+public class VacationDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vacation_view);
+        setContentView(R.layout.activity_vacation_detail);
     }
 }

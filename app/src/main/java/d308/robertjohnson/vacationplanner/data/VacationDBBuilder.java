@@ -16,7 +16,7 @@ public abstract class VacationDBBuilder extends RoomDatabase {
 
     private static volatile VacationDBBuilder Instance;
     public ExcursionDao excursionDao;
-    public VacationDao vacationDao;
+    public  VacationDao vacationDao;
 
 
     static VacationDBBuilder getDatabase(final Context context){
