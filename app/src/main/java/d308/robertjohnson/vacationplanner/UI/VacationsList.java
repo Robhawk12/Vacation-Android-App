@@ -1,6 +1,8 @@
 package d308.robertjohnson.vacationplanner.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +35,13 @@ private Repository repository;
             }
 
         });
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        repository = new Repository(getApplication());
+        List<Vacation> allVacations = repository.getAllVacations();
+        final VacationAdapter vacationAdapter = new VacationAdapter(this);
+        recyclerView.setAdapter(vacationAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vacationAdapter.setmVacations(allVacations);
         //System.out.println(getIntent().getStringExtra("test"));
     }
     @Override
