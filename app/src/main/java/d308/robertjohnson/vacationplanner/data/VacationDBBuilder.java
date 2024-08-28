@@ -11,19 +11,20 @@ import d308.robertjohnson.vacationplanner.dao.VacationDao;
 import d308.robertjohnson.vacationplanner.entities.Excursion;
 import d308.robertjohnson.vacationplanner.entities.Vacation;
 
-@Database(entities = {Vacation.class, Excursion.class},version = 1,exportSchema = false)
+@Database(entities = {Vacation.class, Excursion.class}, version = 1, exportSchema = false)
 public abstract class VacationDBBuilder extends RoomDatabase {
+    public abstract ExcursionDao excursionDao();
+
+    public abstract VacationDao vacationDao();
+
 
     private static volatile VacationDBBuilder Instance;
-    public ExcursionDao excursionDao;
-    public  VacationDao vacationDao;
 
-
-    static VacationDBBuilder getDatabase(final Context context){
-        if (Instance == null){
-            synchronized (VacationDBBuilder.class){
-                if(Instance==null){
-                    Instance = Room.databaseBuilder(context.getApplicationContext(),VacationDBBuilder.class,"My Vacation Builder")
+    static VacationDBBuilder getDatabase(final Context context) {
+        if (Instance == null) {
+            synchronized (VacationDBBuilder.class) {
+                if (Instance == null) {
+                    Instance = Room.databaseBuilder(context.getApplicationContext(), VacationDBBuilder.class, "My_Vacation_Builder.db")
                             .fallbackToDestructiveMigration()
                             .build();
                 }
@@ -31,4 +32,6 @@ public abstract class VacationDBBuilder extends RoomDatabase {
         }
         return Instance;
     }
+
+
 }

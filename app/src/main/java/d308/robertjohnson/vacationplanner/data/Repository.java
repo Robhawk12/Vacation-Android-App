@@ -23,11 +23,11 @@ public class Repository {
 
     public Repository(Application application) {
         VacationDBBuilder db =VacationDBBuilder.getDatabase(application);
-        mExcursionDao = db.excursionDao;
-        mVacationDao = db.vacationDao;
+        mExcursionDao = db.excursionDao();
+        mVacationDao = db.vacationDao();
     }
 
-    public List<Vacation>getmAllVacations(){
+    public List<Vacation>getAllVacations(){
         databaseExecutor.execute(()->{
             mAllVacations=mVacationDao.getAllVacations();
         });

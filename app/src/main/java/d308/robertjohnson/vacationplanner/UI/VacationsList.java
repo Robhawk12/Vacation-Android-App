@@ -14,6 +14,7 @@ import java.util.List;
 
 import d308.robertjohnson.vacationplanner.R;
 import d308.robertjohnson.vacationplanner.data.Repository;
+import d308.robertjohnson.vacationplanner.entities.Excursion;
 import d308.robertjohnson.vacationplanner.entities.Vacation;
 
 public class VacationsList extends AppCompatActivity {
@@ -48,15 +49,13 @@ private Repository repository;
         }
         if (item.getItemId() == R.id.vacation) {
             Repository repository=new Repository(getApplication());
-
-            //insert samples
-            Vacation vacation=new Vacation(0,"Hawaii","Beach Surf","01/02/2025","01/10/2025");
+            Vacation vacation=new Vacation(0,"Miami","Vista","01/02/2025","01/07/2025");
             repository.insert(vacation);
-
-            vacation = new Vacation(1, "Jamaica", "Rum Runner Hotel", "09/02/2025", "09/10/2025");
+            vacation=new Vacation(0,"Aspen","Plowed","02/02/2025","02/07/2025");
             repository.insert(vacation);
-
-            List<Vacation> allVacations=repository.getmAllVacations();
+            Excursion excursion = new Excursion(0,"Shopping",1);
+            repository.insert(excursion);
+            List<Vacation> allVacations=repository.getAllVacations();
 
 
 
