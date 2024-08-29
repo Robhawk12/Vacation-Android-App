@@ -62,7 +62,7 @@ private Repository repository;
             repository.insert(vacation);
             vacation=new Vacation(0,"Aspen","Plowed","02/02/2025","02/07/2025");
             repository.insert(vacation);
-            Excursion excursion = new Excursion(0,"Shopping",1);
+            Excursion excursion = new Excursion(0,"Shopping","01/05/2025",0);
             repository.insert(excursion);
             List<Vacation> allVacations=repository.getAllVacations();
 

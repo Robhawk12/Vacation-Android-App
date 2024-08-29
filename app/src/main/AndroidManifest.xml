@@ -15,7 +15,9 @@
         <activity
             android:name=".UI.ExcursionDetail"
             android:label="Excursion Detail"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".UI.VacationDetail"/>
+
         <activity
             android:name=".UI.VacationDetail"
             android:label="Vacation View"
