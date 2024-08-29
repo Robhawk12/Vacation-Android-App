@@ -16,21 +16,22 @@ import java.util.List;
 
 import d308.robertjohnson.vacationplanner.R;
 import d308.robertjohnson.vacationplanner.data.Repository;
+import d308.robertjohnson.vacationplanner.data.VacationDBBuilder;
 import d308.robertjohnson.vacationplanner.entities.Excursion;
 import d308.robertjohnson.vacationplanner.entities.Vacation;
 
 public class VacationsList extends AppCompatActivity {
-private Repository repository;
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacations_list);
-        FloatingActionButton fab=findViewById(R.id.floatingActionButton);
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(VacationsList.this, VacationDetail.class);
+                Intent intent = new Intent(VacationsList.this, VacationDetail.class);
                 startActivity(intent);
             }
 
@@ -44,33 +45,44 @@ private Repository repository;
         vacationAdapter.setmVacations(allVacations);
         //System.out.println(getIntent().getStringExtra("test"));
     }
+
+
     @Override
-    public boolean onCreateOptionsMenu (Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_vacation_list, menu);
+        getMenuInflater().inflate(R.menu.menu_vacationdetails, menu);
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    protected void onResume() {
 
-        if (item.getItemId()==android.R.id.home){
+        super.onResume();
+        List<Vacation> allVacations=repository.getAllVacations();
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        final VacationAdapter vacationAdapter = new VacationAdapter(this);
+        recyclerView.setAdapter(vacationAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vacationAdapter.setmVacations(allVacations);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        List<Vacation> allVacations = repository.getAllVacations();
+        if (item.getItemId() == android.R.id.home) {
             this.finish();
             return true;
         }
         if (item.getItemId() == R.id.vacation) {
-            Repository repository=new Repository(getApplication());
-            Vacation vacation=new Vacation(0,"Miami","Vista","01/02/2025","01/07/2025");
-            repository.insert(vacation);
-            vacation=new Vacation(0,"Aspen","Plowed","02/02/2025","02/07/2025");
-            repository.insert(vacation);
-            Excursion excursion = new Excursion(0,"Shopping","01/05/2025",0);
-            repository.insert(excursion);
-            List<Vacation> allVacations=repository.getAllVacations();
+            Repository repository = new Repository(getApplication());
 
+            if(repository.getAllVacations().size()==0) {
+                Vacation vacation = new Vacation(0, "Miami", "Vista", "01/02/2025", "01/07/2025");
+                repository.insert(vacation);
 
-
+                Excursion excursion = new Excursion(0, "Shopping", "01/05/2025", 0);
+                repository.insert(excursion);
+            }
             return true;
         }
-
-        return true;
+       return true;
     }
 }

@@ -9,8 +9,7 @@ import d308.robertjohnson.vacationplanner.R;
 
 public class ExcursionDetail extends AppCompatActivity {
 
-    EditText editName;
-    EditText editDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
