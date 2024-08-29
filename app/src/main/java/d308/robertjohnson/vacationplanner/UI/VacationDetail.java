@@ -13,10 +13,12 @@ import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import d308.robertjohnson.vacationplanner.R;
 import d308.robertjohnson.vacationplanner.data.Repository;
+import d308.robertjohnson.vacationplanner.entities.Excursion;
 import d308.robertjohnson.vacationplanner.entities.Vacation;
 
 public class VacationDetail extends AppCompatActivity {
@@ -58,7 +60,11 @@ public class VacationDetail extends AppCompatActivity {
         final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        excursionAdapter.setExcursions(repository.getAllExcursions());
+        List<Excursion> assocExcursion = new ArrayList<>();
+        for (Excursion e : repository.getAllExcursions()){
+            if(e.getExcursionID() == vacationID) assocExcursion.add(e);
+        }
+        excursionAdapter.setExcursions(assocExcursion);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
