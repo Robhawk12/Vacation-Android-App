@@ -45,7 +45,7 @@
                     android:id="@+id/vacation_name"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:hint="name_of_vacation"
+                    android:hint=" vacation name"
                     android:textColor="#FFFFFF"/>
 
             </LinearLayout>
@@ -64,7 +64,45 @@
                     android:id="@+id/hotel_name"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:hint="hotel name"
+                    android:hint=" hotel name"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="Start Date: "
+                    android:textColor="#FFFFFF"/>
+
+                <EditText
+                    android:id="@+id/startdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:hint=" start date"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="End Date: "
+                    android:textColor="#FFFFFF"/>
+
+                <EditText
+                    android:id="@+id/enddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:hint=" end date"
                     android:textColor="#FFFFFF"/>
 
             </LinearLayout>

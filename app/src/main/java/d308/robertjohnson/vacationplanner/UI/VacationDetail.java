@@ -24,10 +24,14 @@ import d308.robertjohnson.vacationplanner.entities.Vacation;
 public class VacationDetail extends AppCompatActivity {
     String title;
     String hotel;
+    String startDate;
+    String endDate;
     int vacationID;
 
     EditText editTitle;
     EditText editHotel;
+    EditText editStart;
+    EditText editEnd;
 
     Repository repository;
 
@@ -40,12 +44,17 @@ public class VacationDetail extends AppCompatActivity {
 
         editTitle = findViewById(R.id.vacation_name);
         editHotel = findViewById(R.id.hotel_name);
+        editStart = findViewById(R.id.startdate);
+        editEnd = findViewById(R.id.enddate);
         vacationID = getIntent().getIntExtra("id", -1);
         title = getIntent().getStringExtra("title");
         hotel = getIntent().getStringExtra("hotel");
+        startDate = getIntent().getStringExtra("startDate");
+        endDate = getIntent().getStringExtra("endDate");
         editTitle.setText(title);
         editHotel.setText(hotel);
-
+        editStart.setText(startDate);
+        editEnd.setText(endDate);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,12 +90,14 @@ public class VacationDetail extends AppCompatActivity {
                  vacationID = repository.getAllVacations()
                             .get(repository.getAllVacations().size() - 1).getVacationID() + 1;
                 vacation = new Vacation(vacationID, editTitle.getText().toString(),
-                        editHotel.getText().toString(), "", "");
+                        editHotel.getText().toString(), editStart.getText().toString(),
+                        editEnd.getText().toString());
                 repository.insert(vacation);
                 this.finish();
             } else {
                 vacation = new Vacation(vacationID, editTitle.getText().toString(),
-                        editHotel.getText().toString(), "", "");
+                        editHotel.getText().toString(), editStart.getText().toString(),
+                        editEnd.getText().toString());
                 repository.update(vacation);
                 this.finish();
             }
