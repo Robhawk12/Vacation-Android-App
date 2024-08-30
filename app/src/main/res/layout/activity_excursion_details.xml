@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#B0CEE5"
     tools:context=".UI.ExcursionDetail">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -19,12 +21,14 @@
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_margin="2dp"
-                android:text="Excursion" />
+                android:textColor="#FFFFFF"
+                android:text="Excursion name: " />
 
             <EditText
                 android:id="@+id/excursionName"
                 android:layout_width="200dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:hint=" name "/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -36,13 +40,19 @@
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_margin="2dp"
-                android:text="Date" />
+                android:textColor="#FFFFFF"
+                android:text="Excursion Date:" />
 
             <EditText
                 android:id="@+id/excursionDate"
                 android:layout_width="200dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:hint=" date "/>
         </androidx.appcompat.widget.LinearLayoutCompat>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
