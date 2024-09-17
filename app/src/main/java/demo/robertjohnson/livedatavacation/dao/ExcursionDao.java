@@ -1,6 +1,7 @@
 package demo.robertjohnson.livedatavacation.dao;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -11,7 +12,7 @@ import java.util.List;
 
 import demo.robertjohnson.livedatavacation.entity.Excursion;
 import demo.robertjohnson.livedatavacation.entity.Vacation;
-
+@Dao
 public interface ExcursionDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -23,12 +24,12 @@ void insert(Excursion excursion);
     @Query("SELECT * FROM excursions ORDER BY name ASC")
     LiveData<List<Vacation>> getAllExcursions();
 
-    @Query("SELECT * FROM contact_table WHERE contact_table.id == :id")
-    LiveData<Contact> get(int id);
+    @Query("SELECT * FROM excursions WHERE excursions.id == :id")
+    LiveData<List<Excursion>> get(int id);
 
     @Update
-    void update(Contact contact);
+    void update(Excursion  excursion);
 
     @Delete
-    void delete(Contact contact);
+    void delete(Excursion excursion);
 }
