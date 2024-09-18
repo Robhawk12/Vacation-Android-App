@@ -1,4 +1,4 @@
-package demo.robertjohnson.livedatavacation.util;
+package demo.robertjohnson.livedatavacation.model;
 
 import androidx.appcompat.app.AppCompatActivity;
 
