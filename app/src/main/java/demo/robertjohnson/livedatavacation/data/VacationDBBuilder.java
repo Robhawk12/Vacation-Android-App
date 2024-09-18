@@ -1,11 +1,11 @@
 package demo.robertjohnson.livedatavacation.data;
 
 import android.content.Context;
-
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import demo.robertjohnson.livedatavacation.dao.ExcursionDao;
 import demo.robertjohnson.livedatavacation.dao.VacationDao;
 import demo.robertjohnson.livedatavacation.entity.Excursion;
@@ -20,7 +20,8 @@ public abstract class VacationDBBuilder extends RoomDatabase {
 
     private static volatile VacationDBBuilder INSTANCE;
 
-    //private static final ExecutorService d
+    private static final int NUMBER_OF_THREADS=4;
+    public static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static VacationDBBuilder getDatabase(final Context context){
         if (INSTANCE == null){
@@ -34,4 +35,5 @@ public abstract class VacationDBBuilder extends RoomDatabase {
         }
         return INSTANCE;
     }
+
 }

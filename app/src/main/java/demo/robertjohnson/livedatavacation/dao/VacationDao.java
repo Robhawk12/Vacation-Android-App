@@ -20,11 +20,10 @@ public interface VacationDao {
     @Query("DELETE FROM vacations")
     void deleteAll();
 
-    @Query("SELECT * FROM vacations ORDER BY name ASC")
+    @Query("SELECT * FROM vacations ORDER BY id ASC")
     LiveData<List<Vacation>> getAllVacations();
 
-    @Query("SELECT * FROM vacations WHERE vacations.id == :id")
-    LiveData<Vacation> get(int id);
+
 
     @Update
     void update(Vacation vacation);

@@ -16,16 +16,16 @@ import demo.robertjohnson.livedatavacation.entity.Vacation;
 public interface ExcursionDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-void insert(Excursion excursion);
+    void insert(Excursion excursion);
 
     @Query("DELETE FROM excursions")
     void deleteAll();
 
-    @Query("SELECT * FROM excursions ORDER BY name ASC")
-    LiveData<List<Vacation>> getAllExcursions();
+    @Query("SELECT * FROM excursions ORDER BY id ASC")
+    LiveData<List<Excursion>> getAllExcursions();
 
-    @Query("SELECT * FROM excursions WHERE excursions.id == :id")
-    LiveData<List<Excursion>> get(int id);
+    @Query("SELECT * FROM excursions WHERE vacation_id=:vacationID  ORDER BY id ASC")
+    LiveData<List<Excursion>> getAssociatedExcursions(int vacationID);
 
     @Update
     void update(Excursion  excursion);
