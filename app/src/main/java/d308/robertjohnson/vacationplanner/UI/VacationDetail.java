@@ -39,13 +39,14 @@ public class VacationDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacation_detail);
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
+
 
 
         editTitle = findViewById(R.id.vacation_name);
         editHotel = findViewById(R.id.hotel_name);
         editStart = findViewById(R.id.startdate);
         editEnd = findViewById(R.id.enddate);
+
         vacationID = getIntent().getIntExtra("id", -1);
         title = getIntent().getStringExtra("title");
         hotel = getIntent().getStringExtra("hotel");
@@ -56,24 +57,26 @@ public class VacationDetail extends AppCompatActivity {
         editStart.setText(startDate);
         editEnd.setText(endDate);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(VacationDetail.this, ExcursionDetail.class);
-                startActivity(intent);
-            }
-        });
+
         RecyclerView recyclerView = findViewById(R.id.excursionRecyclerview);
         repository = new Repository(getApplication());
-
         final ExcursionAdapter excursionAdapter = new ExcursionAdapter(this);
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Excursion> assocExcursion = new ArrayList<>();
         for (Excursion e : repository.getAllExcursions()){
-            if(e.getExcursionID() == vacationID) assocExcursion.add(e);
+            if(e.getVacationID() == vacationID) assocExcursion.add(e);
         }
         excursionAdapter.setExcursions(assocExcursion);
+        FloatingActionButton fab1 =findViewById(R.id.floatingActionButton2);
+        fab1.setOnClickListener((new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(VacationDetail.this, ExcursionDetail.class);
+                intent.putExtra("vacationID",vacationID);
+                startActivity(intent);
+            }
+        }));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

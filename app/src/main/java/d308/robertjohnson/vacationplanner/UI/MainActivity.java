@@ -10,6 +10,7 @@ import android.widget.Button;
 import java.util.List;
 
 import d308.robertjohnson.vacationplanner.R;
+import d308.robertjohnson.vacationplanner.dao.ExcursionDao;
 import d308.robertjohnson.vacationplanner.data.Repository;
 import d308.robertjohnson.vacationplanner.entities.Excursion;
 import d308.robertjohnson.vacationplanner.entities.Vacation;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, VacationsList.class);
                 intent.putExtra("test", "Information");
+
                 startActivity(intent);
             }
         });
