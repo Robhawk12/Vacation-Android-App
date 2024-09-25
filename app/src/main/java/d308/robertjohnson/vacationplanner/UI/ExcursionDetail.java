@@ -131,13 +131,6 @@ public class ExcursionDetail extends AppCompatActivity {
 
                 Date date;
                 String info=editDate.getText().toString();
-                if(info.equals(""))info="01/01/2025";
-                try{
-                    vacationCalendarStart.setTime(sdf.parse(info));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         ExcursionDetail.this, startDate, vacationCalendarStart
                         .get(Calendar.YEAR), vacationCalendarStart.get(Calendar.MONTH),

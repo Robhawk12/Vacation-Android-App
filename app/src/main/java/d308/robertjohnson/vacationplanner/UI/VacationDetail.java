@@ -3,16 +3,19 @@ package d308.robertjohnson.vacationplanner.UI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.Calendar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -88,27 +91,19 @@ public class VacationDetail extends AppCompatActivity {
                 startActivity(intent);
             }
         }));
-        startVacDate = new DatePickerDialog.OnDateSetListener() {
+        startVacDate = (view, year, monthOfYear, dayOfMonth) -> {
+            vacationCalendarStart.set(Calendar.YEAR, year);
+            vacationCalendarStart.set(Calendar.MONTH, monthOfYear);
+            vacationCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
-                vacationCalendarStart.set(Calendar.YEAR, year);
-                vacationCalendarStart.set(Calendar.MONTH, monthOfYear);
-                vacationCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabelStart();
-            }
-
+            updateLabelStart();
         };
 
-        endVacDate = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
-                vacationCalendarEnd.set(Calendar.YEAR, year);
-                vacationCalendarEnd.set(Calendar.MONTH, monthOfYear);
-                vacationCalendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabelEnd();
-            }
+        endVacDate = (view, year, monthOfYear, dayOfMonth) -> {
+            vacationCalendarEnd.set(Calendar.YEAR, year);
+            vacationCalendarEnd.set(Calendar.MONTH, monthOfYear);
+            vacationCalendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabelEnd();
         };
 
         editStartDate.setOnClickListener(new View.OnClickListener() {
@@ -116,13 +111,7 @@ public class VacationDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Date date;
-                String info=editStartDate.getText().toString();
-                if(info.equals(""))info="01/01/25";
-                try{
-                 vacationCalendarStart.setTime(sdf.parse(info));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+               // String info=editStartDate.getText().toString();
                 new DatePickerDialog(VacationDetail.this, startVacDate, vacationCalendarStart
                         .get(Calendar.YEAR), vacationCalendarStart.get(Calendar.MONTH),
                         vacationCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
@@ -134,13 +123,7 @@ public class VacationDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Date date;
-                String info=editEndDate.getText().toString();
-                if(info.equals(""))info="01/01/25";
-                try{
-                    vacationCalendarEnd.setTime(sdf.parse(info));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                //String info=editEndDate.getText().toString();
                 DatePickerDialog datePickerDialog = new DatePickerDialog(VacationDetail.this, endVacDate, vacationCalendarStart
                         .get(Calendar.YEAR), vacationCalendarStart.get(Calendar.MONTH),
                         vacationCalendarStart.get(Calendar.DAY_OF_MONTH));
@@ -172,7 +155,13 @@ public class VacationDetail extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if (item.getItemId() == R.id.vacationsave) {
+            try {
+                validateDates();
+            } catch (InvalidDateRangeException e) {
+                throw new RuntimeException(e);
+            }
             Vacation vacation;
             if (vacationID == -1) {
                 if (repository.getAllVacations().size() == 0) vacationID = 1;
@@ -195,6 +184,17 @@ public class VacationDetail extends AppCompatActivity {
         this.finish();
         return true;
 
+    }
+    private void validateDates() throws InvalidDateRangeException {
+
+        if(!vacationCalendarStart.before(vacationCalendarEnd)) {
+            throw new InvalidDateRangeException("Start date must be before end date");
+        }
+    }
+    public class InvalidDateRangeException extends Exception {
+        public InvalidDateRangeException(String message) {
+            super(message);
+        }
     }
     @Override
     public void onResume(){
