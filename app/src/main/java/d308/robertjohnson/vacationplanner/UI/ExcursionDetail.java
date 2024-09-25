@@ -36,9 +36,8 @@ public class ExcursionDetail extends AppCompatActivity {
     String startVacationDate;
     String endVacationDate;
     EditText editName;
-    EditText editPrice;
     EditText editNote;
-    TextView editDate;
+    EditText editDate;
     String excursionDate;
     Repository repository;
     Date startStartDate = null;
@@ -54,16 +53,18 @@ public class ExcursionDetail extends AppCompatActivity {
         setContentView(R.layout.activity_excursion_details);
 
         repository = new Repository(getApplication());
-        vacationID = getIntent().getIntExtra("vacationID",-1);
+
+
         excursionID = getIntent().getIntExtra("id",-1);
         name = getIntent().getStringExtra("name");
         excursionDate = getIntent().getStringExtra("excursionDate");
-        editName = findViewById(R.id.excursionName);
-        editName.setText(name);
+        vacationID = getIntent().getIntExtra("vacationID",-1);
         startVacationDate = getIntent().getStringExtra("startVacationDate");
         endVacationDate = getIntent().getStringExtra("endVacationDate");
         //editNote=findViewById(R.id.excursionnote);
-        //editDate=findViewById(R.id.excursiondate);
+        editName = findViewById(R.id.excursionName);
+        editName.setText(name);
+        editDate=findViewById(R.id.excursionDate);
         editDate.setText(excursionDate);
         String dateFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
@@ -103,13 +104,9 @@ public class ExcursionDetail extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
-
                 vacationCalendarStart.set(Calendar.YEAR, year);
                 vacationCalendarStart.set(Calendar.MONTH, monthOfYear);
                 vacationCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-
                 updateLabelStart();
             }
 
@@ -123,7 +120,7 @@ public class ExcursionDetail extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            // Handle the case where the strings are null
+
             Log.e("ExcursionDetails", "Received null for start or end vacation date");
         }
 
@@ -131,11 +128,10 @@ public class ExcursionDetail extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 Date date;
-                //get value from other screen,but I'm going to hard code it right now
                 String info=editDate.getText().toString();
-                if(info.equals(""))info="02/10/24";
+                if(info.equals(""))info="01/01/2025";
                 try{
                     vacationCalendarStart.setTime(sdf.parse(info));
                 } catch (ParseException e) {

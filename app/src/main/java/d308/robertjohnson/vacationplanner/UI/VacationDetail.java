@@ -115,7 +115,6 @@ public class VacationDetail extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Date date;
                 String info=editStartDate.getText().toString();
                 if(info.equals(""))info="01/01/25";
