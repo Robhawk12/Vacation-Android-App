@@ -46,7 +46,7 @@ public class VacationsList extends AppCompatActivity {
         if(repository.getAllVacations().size()==0) {
             Vacation vacation = new Vacation(0, "Miami", "Vista", "01/02/2025", "01/07/2025");
             repository.insert(vacation);
-            Excursion excursion = new Excursion(0, "Shopping", "01/05/2025", 0);
+            Excursion excursion = new Excursion(0, "Shopping", "01/05/2025", 1);
             repository.insert(excursion);
         }
     }
