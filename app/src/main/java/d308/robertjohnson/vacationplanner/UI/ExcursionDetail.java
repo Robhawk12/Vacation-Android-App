@@ -182,7 +182,17 @@ public class ExcursionDetail extends AppCompatActivity {
                     this.finish();
                     return true;
                 }
-
+                if(item.getItemId()== R.id.excursionDelete) {
+                    Excursion currentExcursion = null;
+                    for (Excursion e : repository.getAllExcursions()) {
+                        if (e.getExcursionID() == excursionID) currentExcursion = e;
+                    }
+                    if(currentExcursion != null) {
+                        repository.delete(currentExcursion);
+                    }
+                    this.finish();
+                    return true;
+                }
 
                 return true;
             }

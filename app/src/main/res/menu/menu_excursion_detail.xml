@@ -9,4 +9,7 @@
     <item android:title="Notify"
         android:orderInCategory="100"
         android:id="@+id/notify"/>
+    <item android:title="Delete Excursion"
+        android:orderInCategory="100"
+        android:id="@+id/excursionDelete"/>
 </menu>
