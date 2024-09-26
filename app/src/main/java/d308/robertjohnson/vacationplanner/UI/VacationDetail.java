@@ -3,6 +3,7 @@ package d308.robertjohnson.vacationplanner.UI;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.Calendar;
 
 import android.app.DatePickerDialog;
@@ -76,18 +77,18 @@ public class VacationDetail extends AppCompatActivity {
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Excursion> assocExcursion = new ArrayList<>();
-        for (Excursion e : repository.getAllExcursions()){
-            if(e.getVacationID() == vacationID) assocExcursion.add(e);
+        for (Excursion e : repository.getAllExcursions()) {
+            if (e.getVacationID() == vacationID) assocExcursion.add(e);
         }
         excursionAdapter.setExcursions(assocExcursion);
-        FloatingActionButton fab1 =findViewById(R.id.floatingActionButton2);
+        FloatingActionButton fab1 = findViewById(R.id.floatingActionButton2);
         fab1.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(VacationDetail.this, ExcursionDetail.class);
-                intent.putExtra("vacationID",vacationID);
+                intent.putExtra("vacationID", vacationID);
                 intent.putExtra("startVacationDate", startVacationDate);
-                intent.putExtra( "endVacationDate", endVacationDate);
+                intent.putExtra("endVacationDate", endVacationDate);
                 startActivity(intent);
             }
         }));
@@ -111,7 +112,7 @@ public class VacationDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Date date;
-               // String info=editStartDate.getText().toString();
+                // String info=editStartDate.getText().toString();
                 new DatePickerDialog(VacationDetail.this, startVacDate, vacationCalendarStart
                         .get(Calendar.YEAR), vacationCalendarStart.get(Calendar.MONTH),
                         vacationCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
@@ -141,6 +142,7 @@ public class VacationDetail extends AppCompatActivity {
 
         editStartDate.setText(sdf.format(vacationCalendarStart.getTime()));
     }
+
     private void updateLabelEnd() {
         String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -156,6 +158,25 @@ public class VacationDetail extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (item.getItemId() == R.id.vacationdelete) {
+            for (Vacation v : repository.getAllVacations()) {
+                if (v.getVacationID() == vacationID) currentVacation = v;
+            }
+
+            numExcursions = 0;
+            for (Excursion excursion : repository.getAllExcursions()) {
+                if (excursion.getVacationID() == vacationID) ++numExcursions;
+            }
+
+            if (numExcursions == 0) {
+                repository.delete(currentVacation);
+                Toast.makeText(VacationDetail.this, currentVacation.getTitle() + " was deleted", Toast.LENGTH_LONG).show();
+                VacationDetail.this.finish();
+            } else {
+                Toast.makeText(VacationDetail.this, "Can't delete a Vacation with excursions", Toast.LENGTH_LONG).show();
+            }
+            return true;
+        }
         if (item.getItemId() == R.id.vacationsave) {
             try {
                 validateDates();
@@ -166,7 +187,7 @@ public class VacationDetail extends AppCompatActivity {
             if (vacationID == -1) {
                 if (repository.getAllVacations().size() == 0) vacationID = 1;
                 else
-                 vacationID = repository.getAllVacations()
+                    vacationID = repository.getAllVacations()
                             .get(repository.getAllVacations().size() - 1).getVacationID() + 1;
                 vacation = new Vacation(vacationID, editTitle.getText().toString(),
                         editHotel.getText().toString(), editStartDate.getText().toString(),
@@ -180,24 +201,17 @@ public class VacationDetail extends AppCompatActivity {
                 repository.update(vacation);
                 this.finish();
             }
+
         }
+
         this.finish();
         return true;
 
     }
-    private void validateDates() throws InvalidDateRangeException {
 
-        if(!vacationCalendarStart.before(vacationCalendarEnd)) {
-            throw new InvalidDateRangeException("Start date must be before end date");
-        }
-    }
-    public class InvalidDateRangeException extends Exception {
-        public InvalidDateRangeException(String message) {
-            super(message);
-        }
-    }
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         RecyclerView recyclerView = findViewById(R.id.excursionRecyclerview);
         repository = new Repository(getApplication());
@@ -205,10 +219,24 @@ public class VacationDetail extends AppCompatActivity {
         recyclerView.setAdapter(excursionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Excursion> assocExcursion = new ArrayList<>();
-        for (Excursion e : repository.getAllExcursions()){
-            if(e.getVacationID() == vacationID) assocExcursion.add(e);
+        for (Excursion e : repository.getAllExcursions()) {
+            if (e.getVacationID() == vacationID) assocExcursion.add(e);
         }
         excursionAdapter.setExcursions(assocExcursion);
+
+    }
+
+    private void validateDates() throws InvalidDateRangeException {
+
+        if (!vacationCalendarStart.before(vacationCalendarEnd)) {
+            throw new InvalidDateRangeException("Start date must be before end date");
+        }
+    }
+
+    public class InvalidDateRangeException extends Exception {
+        public InvalidDateRangeException(String message) {
+            super(message);
+        }
 
     }
 }
