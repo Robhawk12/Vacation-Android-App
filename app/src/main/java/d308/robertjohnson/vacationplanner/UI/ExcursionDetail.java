@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -81,15 +82,16 @@ public class ExcursionDetail extends AppCompatActivity {
         spinner.setAdapter(vacationIdAdapter);
         spinner.setSelection(vacationID - 1);
 
-        Log.d("DebugTag", "vacationIdList size: " + vacationIdList.size());
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("DebugTag", "Selected position: " + position + ", List size: " + vacationIdList.size());
+
                 if (position >= 0 && position < vacationIdList.size()) {
                     vacationID = vacationIdList.get(position);
                 } else {
                     Log.e("DebugTag", "Invalid position: " + position);
+                    Toast.makeText(ExcursionDetail.this, "Invalid date.", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -119,9 +121,6 @@ public class ExcursionDetail extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        } else {
-
-            Log.e("ExcursionDetails", "Received null for start or end vacation date");
         }
 
         editDate.setOnClickListener(new View.OnClickListener() {

@@ -43,12 +43,7 @@ public class VacationsList extends AppCompatActivity {
         recyclerView.setAdapter(vacationAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vacationAdapter.setmVacations(allVacations);
-        if(repository.getAllVacations().size()==0) {
-            Vacation vacation = new Vacation(0, "Miami", "Vista", "01/02/2025", "01/07/2025");
-            repository.insert(vacation);
-            Excursion excursion = new Excursion(1, "Shopping", "01/05/2025", 1);
-            repository.insert(excursion);
-        }
+
     }
 
 
@@ -77,6 +72,18 @@ public class VacationsList extends AppCompatActivity {
             this.finish();
             return true;
         }
+        if (item.getItemId() == R.id.vacation) {
+            repository=new Repository(getApplication());
+
+
+            Vacation vacation=new Vacation(0,"Hawaii","Beach Surf","01/02/2025","01/10/2025");
+            repository.insert(vacation);
+            repository.getAllVacations();
+
+            this.finish();
+            return true;
+        }
+
 
         return true;
     }
