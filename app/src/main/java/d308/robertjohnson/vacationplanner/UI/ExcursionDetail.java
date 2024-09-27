@@ -3,8 +3,10 @@ package d308.robertjohnson.vacationplanner.UI;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -202,10 +204,12 @@ public class ExcursionDetail extends AppCompatActivity {
                 e.printStackTrace();
             }
             Long trig = excDate.getTime();
-            Intent intent = new Intent(ExcursionDetail.this,ExcursionReceiver.class);
-            intent.putExtra("exckey", "Your "+excName+" excursion is Today!");
+            Intent intent = new Intent(ExcursionDetail.this,ExcursionBCReceiver.class);
+            intent.putExtra("exckey", "Your "+excName+" excursion is Today! "+excDate);
             PendingIntent pendingIntent =PendingIntent.getBroadcast(ExcursionDetail.this,++MainActivity.excAlert,
                     intent,PendingIntent.FLAG_IMMUTABLE);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP,trig,pendingIntent);
             return true;
         }
         return true;

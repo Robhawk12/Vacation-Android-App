@@ -16,6 +16,8 @@ import d308.robertjohnson.vacationplanner.entities.Excursion;
 import d308.robertjohnson.vacationplanner.entities.Vacation;
 
 public class MainActivity extends AppCompatActivity {
+    public static int excAlert;
+    public static int notiId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

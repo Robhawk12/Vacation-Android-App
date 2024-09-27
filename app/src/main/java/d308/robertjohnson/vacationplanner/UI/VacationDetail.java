@@ -167,7 +167,7 @@ public class VacationDetail extends AppCompatActivity {
         return true;
     }
     private void scheduleAlarm(AlarmManager alarmManager, long triggerTime, String message, int notificationId) {
-        Intent intent = new Intent(VacationDetail.this, VacationNotifyReceiver.class);
+        Intent intent = new Intent(VacationDetail.this, VacationBCReceiver.class);
         intent.putExtra("show", message);
         intent.putExtra("notification_id", notificationId);
         PendingIntent sender = PendingIntent.getBroadcast(VacationDetail.this, notificationId, intent,
