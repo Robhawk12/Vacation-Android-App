@@ -11,4 +11,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="Delete Vacation" />
+    <item
+        android:id="@+id/share"
+        android:title="Share Note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <item
+        android:id="@+id/vacationNotify"
+        android:title="Share Note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 </menu>

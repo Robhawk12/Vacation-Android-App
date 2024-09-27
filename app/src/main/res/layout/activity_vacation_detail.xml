@@ -17,10 +17,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/baseline_add_24" />
+
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="409dp"
-        android:layout_height="200dp"
+        android:layout_height="260dp"
         android:background="#00BCD4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,16 +40,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:text="Vacation Name: "
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
 
                 <EditText
                     android:id="@+id/vacation_name"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:hint=" vacation name"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,16 +60,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:text="Hotel Name: "
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
 
                 <EditText
                     android:id="@+id/hotel_name"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:hint=" hotel name"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,16 +80,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:text="Start Date: "
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
 
-                <EditText
+                <TextView
                     android:id="@+id/startdate"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
+                    android:focusable="false"
                     android:hint=" start date"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,24 +101,44 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:text="End Date: "
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
 
-                <EditText
+                <TextView
                     android:id="@+id/enddate"
                     android:layout_width="wrap_content"
+                    android:focusable="false"
                     android:layout_height="50dp"
                     android:hint=" end date"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="Vacation Note: "
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/vacationNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:hint=" text here"
+                    android:textColor="#FFFFFF" />
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/excursionRecyclerview"
         android:layout_width="409dp"
-        android:layout_height="464dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="201dp"
+        android:layout_height="475dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollview"/>
+        app:layout_constraintTop_toBottomOf="@+id/scrollview" />
 </androidx.constraintlayout.widget.ConstraintLayout>
