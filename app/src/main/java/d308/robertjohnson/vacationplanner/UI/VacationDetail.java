@@ -9,6 +9,7 @@ import java.util.Calendar;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -83,15 +84,6 @@ public class VacationDetail extends AppCompatActivity {
             if (e.getVacationID() == vacationID) assocExcursion.add(e);
         }
         excursionAdapter.setExcursions(assocExcursion);
-       // ArrayAdapter<Integer> excursionIdAdapter = new ArrayAdapter<>(this,
-        //        android.R.layout.simple_spinner_item,e)
-        /*recyclerView.setOnClickListener((view -> {
-            Intent intent = new Intent(VacationDetail.this,ExcursionDetail.class);
-            View e = findViewById(R.id.textView3);
-            String excursionDate=e.toString();
-            intent.putExtra("excursionDate",excursionDate);
-            startActivity(intent);*/
-
 
         FloatingActionButton fab1 = findViewById(R.id.floatingActionButton2);
         fab1.setOnClickListener((new View.OnClickListener() {
@@ -148,15 +140,15 @@ public class VacationDetail extends AppCompatActivity {
     }
 
     private void updateLabelStart() {
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String dateFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
         editStartDate.setText(sdf.format(vacationCalendarStart.getTime()));
     }
 
     private void updateLabelEnd() {
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String dateFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
 
         editEndDate.setText(sdf.format(vacationCalendarEnd.getTime()));
     }
@@ -224,47 +216,67 @@ public class VacationDetail extends AppCompatActivity {
             }
 
         }
-        if(item.getItemId()==R.id.share) {
+        if (item.getItemId() == R.id.share) {
             Intent sentIntent = new Intent();
             sentIntent.setAction(Intent.ACTION_SEND);
-            sentIntent.putExtra(Intent.EXTRA_TEXT, "Welcome to "+ editTitle.getText().toString()+" you're staying at "
-            + editHotel.getText().toString() + " From "+editStartDate.getText().toString()+" to "+editEndDate.getText().toString()+"." +
-                    " Note: "+ editNote.getText().toString());
+            sentIntent.putExtra(Intent.EXTRA_TEXT, "Welcome to " + editTitle.getText().toString() + " you're staying at "
+                    + editHotel.getText().toString() + " From " + editStartDate.getText().toString() + " to " + editEndDate.getText().toString() + "." +
+                    " Note: " + editNote.getText().toString());
             sentIntent.putExtra(Intent.EXTRA_TITLE, editTitle.getText().toString());
             sentIntent.setType("text/plain");
-            Intent shareIntent=Intent.createChooser(sentIntent,null);
+            Intent shareIntent = Intent.createChooser(sentIntent, null);
             startActivity(shareIntent);
             return true;
 
         }
 
-        /*if(item.getItemId()== R.id.vacationNotify) {
-            String startDate = editStartDate.getText().toString();
-            String endDate = editEndDate.getText().toString();
-            String myFormat = "MM/dd/yy";
-            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        if (item.getItemId() == R.id.startNotify) {
+            String vacName = editTitle.getText().toString();
+            String date = editStartDate.getText().toString();
+
+            String dateFormat = "MM/dd/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
             Date vacaStartDate = null;
-            Date vacaEndDate = null;
+
             try {
-                vacaStartDate = sdf.parse(startDate);
-                vacaEndDate = sdf.parse(endDate);
+                vacaStartDate = sdf.parse(date);
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            try {
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                scheduleAlarm(alarmManager, vacaStartDate.getTime(), "Vacation Start: " + title,  notificationId++); // Schedule start date notification
-                scheduleAlarm(alarmManager, vacaEndDate.getTime(), "Vacation End: " + title, notificationId++); // Schedule end date notification
-            } catch (Exception e){
-                e.printStackTrace();
-            }
+            Long trig = vacaStartDate.getTime();
+            Intent intent =new Intent(VacationDetail.this,VacationBCReceiver.class);
+            intent.putExtra("vackey",vacName+" starts today "+date+"!");
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(VacationDetail.this,++MainActivity.excAlert,
+                    intent,PendingIntent.FLAG_IMMUTABLE);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP,trig,pendingIntent);
             return true;
         }
+        if (item.getItemId() == R.id.endNotify) {
+            String vacName = editTitle.getText().toString();
+            String date = editEndDate.getText().toString();
 
-        return super.onOptionsItemSelected(item);*/
-        this.finish();
-        return true;
+            String dateFormat = "MM/dd/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+            Date vacaEndDate = null;
 
+            try {
+                vacaEndDate = sdf.parse(date);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Long trig = vacaEndDate.getTime();
+            Intent intent =new Intent(VacationDetail.this,VacationBCReceiver.class);
+            intent.putExtra("vackey","Sorry! Your vacation to "+vacName+" ends today "+date+".");
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(VacationDetail.this,++MainActivity.excAlert,
+                    intent,PendingIntent.FLAG_IMMUTABLE);
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP,trig,pendingIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

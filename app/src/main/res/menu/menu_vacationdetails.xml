@@ -18,8 +18,14 @@
         android:layout_height="wrap_content"
         />
     <item
-        android:id="@+id/vacationNotify"
-        android:title="Share Note"
+        android:id="@+id/startNotify"
+        android:title="Notify Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <item
+        android:id="@+id/endNotify"
+        android:title="Notify End"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
