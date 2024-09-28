@@ -50,6 +50,7 @@ public class VacationDetail extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener endVacDate;
     final Calendar vacationCalendarStart = Calendar.getInstance();
     final Calendar vacationCalendarEnd = Calendar.getInstance();
+
     Repository repository;
 
     @Override
@@ -244,13 +245,18 @@ public class VacationDetail extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Long trig = vacaStartDate.getTime();
-            Intent intent =new Intent(VacationDetail.this,VacationBCReceiver.class);
-            intent.putExtra("vackey",vacName+" starts today "+date+"!");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(VacationDetail.this,++MainActivity.excAlert,
-                    intent,PendingIntent.FLAG_IMMUTABLE);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP,trig,pendingIntent);
+            try {
+                Long trig = vacaStartDate.getTime();
+                Intent intent = new Intent(VacationDetail.this, VacationBCReceiver.class);
+                intent.putExtra("vackey", vacName + " starts today " + date + "!");
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(VacationDetail.this, ++MainActivity.excAlert,
+                        intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, trig, pendingIntent);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             return true;
         }
         if (item.getItemId() == R.id.endNotify) {

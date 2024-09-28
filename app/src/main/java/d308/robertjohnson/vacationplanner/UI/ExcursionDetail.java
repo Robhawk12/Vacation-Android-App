@@ -49,9 +49,10 @@ public class ExcursionDetail extends AppCompatActivity {
     Date startStartDate = null;
     Date endEndDate = null;
 
+
     DatePickerDialog.OnDateSetListener startDate;
     final Calendar vacationCalendarStart = Calendar.getInstance();
-
+    final Calendar excursionCalendar = Calendar.getInstance();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -64,7 +65,7 @@ public class ExcursionDetail extends AppCompatActivity {
 
         excursionID = getIntent().getIntExtra("id", -1);
         name = getIntent().getStringExtra("name");
-        excursionDate = getIntent().getStringExtra("date");//TODO
+        excursionDate = getIntent().getStringExtra("date");
 
         vacationID = getIntent().getIntExtra("vacationID", -1);
         startVacationDate = getIntent().getStringExtra("startVacationDate");
@@ -119,6 +120,7 @@ public class ExcursionDetail extends AppCompatActivity {
             try {
                 startStartDate = sdf.parse(startVacationDate);
                 endEndDate = sdf.parse(endVacationDate);
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -126,10 +128,10 @@ public class ExcursionDetail extends AppCompatActivity {
 
         editDate.setOnClickListener(v -> {
             String def = editDate.getText().toString();
-            if(def.equals(""))def="01/01/25";
-            try{
+            if (def.equals("")) def = "01/01/25";
+            try {
                 vacationCalendarStart.setTime(sdf.parse(def));
-            }catch (ParseException e){
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
             DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -148,8 +150,8 @@ public class ExcursionDetail extends AppCompatActivity {
     }
 
     private void updateLabelStart() {
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String dateFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
         editDate.setText(sdf.format(vacationCalendarStart.getTime()));
     }
 
@@ -167,6 +169,13 @@ public class ExcursionDetail extends AppCompatActivity {
 
         if (item.getItemId() == R.id.saveExcursion) {
             Excursion excursion;
+           DateRangeChecker checker = new DateRangeChecker();
+            boolean isInRange = checker.validateDates(excursionDate,startVacationDate,endVacationDate);
+            if (!isInRange){
+                Toast.makeText(this,"Excursion is not in range.",Toast.LENGTH_LONG).show();
+                return false;
+            }
+
             if (excursionID == -1) {
                 if (repository.getAllExcursions().size() == 0)
                     excursionID = 1;
@@ -204,14 +213,34 @@ public class ExcursionDetail extends AppCompatActivity {
                 e.printStackTrace();
             }
             Long trig = excDate.getTime();
-            Intent intent = new Intent(ExcursionDetail.this,ExcursionBCReceiver.class);
-            intent.putExtra("exckey", "Your "+excName+" excursion is Today! "+excDate);
-            PendingIntent pendingIntent =PendingIntent.getBroadcast(ExcursionDetail.this,++MainActivity.excAlert,
-                    intent,PendingIntent.FLAG_IMMUTABLE);
+            Intent intent = new Intent(ExcursionDetail.this, ExcursionBCReceiver.class);
+            intent.putExtra("exckey", "Your " + excName + " excursion is Today! " + excDate);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(ExcursionDetail.this, ++MainActivity.excAlert,
+                    intent, PendingIntent.FLAG_IMMUTABLE);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP,trig,pendingIntent);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, trig, pendingIntent);
             return true;
         }
         return true;
     }
+    public class DateRangeChecker{
+        private boolean validateDates(String startDateStr, String endDateStr, String targetDateStr) {
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+            try {
+                Date date = sdf.parse(targetDateStr);
+                Date start = sdf.parse(startDateStr);
+                Date end = sdf.parse(endDateStr);
+                long dateMillis = date.getTime();
+                long startMillis = start .getTime();
+                long endMillis = end.getTime();
+
+                return dateMillis >= startMillis && dateMillis <= endMillis;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
+
 }
