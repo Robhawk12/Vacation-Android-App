@@ -34,6 +34,8 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
                     intent.putExtra("name", current.getExcursionName());
                     intent.putExtra("date", current.getExcursionDate());
                     intent.putExtra("vacationID",current.getVacationID());
+                    intent.putExtra("startDate",current.getVacationStartDate());
+                    intent.putExtra("endDate",current.getVacationEndDate());
                     context.startActivity(intent);
                 }
             });
@@ -60,7 +62,7 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
             Excursion current=mExcursions.get(position);
             String name = current.getExcursionName();
            String date = current.getExcursionDate();
-;            //int vacationID = current.getVacationID();
+;           //int vacationID = current.getVacationID();
             holder.excursionItemView.setText(name);
             holder.excursionItemView2.setText(date);
         }

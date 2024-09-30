@@ -92,8 +92,8 @@ public class VacationDetail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(VacationDetail.this, ExcursionDetail.class);
                 intent.putExtra("vacationID", vacationID);
-                intent.putExtra("startVacationDate", startVacationDate);
-                intent.putExtra("endVacationDate", endVacationDate);
+                intent.putExtra("startDate", startVacationDate);
+                intent.putExtra("endDate", endVacationDate);
 
                 startActivity(intent);
             }

@@ -10,7 +10,9 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="78dp">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -21,14 +23,14 @@
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_margin="2dp"
-                android:textColor="#FFFFFF"
-                android:text="Excursion name: " />
+                android:text="Excursion name: "
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:id="@+id/excursionName"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:hint=" name "/>
+                android:hint=" name " />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -40,21 +42,67 @@
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_margin="2dp"
-                android:textColor="#FFFFFF"
-                android:text="Excursion Date:" />
+                android:text="Vacation start:"
+                android:textColor="#7C7A7A" />
+
+            <TextView
+                android:id="@+id/vacationstart"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:hint=" date " />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:text="Vacation End:"
+                android:textColor="#7C7A7A" />
+
+            <TextView
+                android:id="@+id/vacationend"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:hint=" date " />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:text="Excursion Date:"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/excursionDate"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:focusable="false"
-                android:hint=" date "/>
+                android:hint=" date " />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:clickable="false"
+            android:importantForAccessibility="auto"
+            android:longClickable="false"
+            android:padding="2dp"
+            android:spinnerMode="dropdown" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
