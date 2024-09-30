@@ -192,10 +192,26 @@ public class VacationDetail extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.vacationsave) {
+            //validateDates();
+            /*if (validateDates() == 1){
+                VacationDetail.this.finish();
+            }*/
+            startVacationDate =  editStartDate.getText().toString();
+            endVacationDate = editEndDate.getText().toString();
+            String dateFormat = "MM/dd/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
             try {
-                validateDates();
-            } catch (InvalidDateRangeException e) {
-                throw new RuntimeException(e);
+                Date s  = sdf.parse(startVacationDate);
+                Date e  = sdf.parse(endVacationDate);
+                //assert e != null;
+                if(e.before(s )){
+                    Toast.makeText(VacationDetail.this,"Start date must be before end date!",
+                            Toast.LENGTH_LONG).show();
+                    this.finish();
+
+                }
+            }catch (ParseException e){
+                e.printStackTrace();
             }
             Vacation vacation;
             if (vacationID == -1) {
@@ -206,12 +222,14 @@ public class VacationDetail extends AppCompatActivity {
                 vacation = new Vacation(vacationID, editTitle.getText().toString(),
                         editHotel.getText().toString(), editStartDate.getText().toString(),
                         editEndDate.getText().toString());
+
                 repository.insert(vacation);
                 this.finish();
             } else {
                 vacation = new Vacation(vacationID, editTitle.getText().toString(),
                         editHotel.getText().toString(), editStartDate.getText().toString(),
                         editEndDate.getText().toString());
+
                 repository.update(vacation);
                 this.finish();
             }
@@ -246,6 +264,7 @@ public class VacationDetail extends AppCompatActivity {
                 e.printStackTrace();
             }
             try {
+                assert vacaStartDate != null;
                 Long trig = vacaStartDate.getTime();
                 Intent intent = new Intent(VacationDetail.this, VacationBCReceiver.class);
                 intent.putExtra("vackey", vacName + " starts today " + date + "!");
@@ -273,6 +292,7 @@ public class VacationDetail extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            assert vacaEndDate != null;
             Long trig = vacaEndDate.getTime();
             Intent intent =new Intent(VacationDetail.this,VacationBCReceiver.class);
             intent.putExtra("vackey","Sorry! Your vacation to "+vacName+" ends today "+date+".");
@@ -302,17 +322,25 @@ public class VacationDetail extends AppCompatActivity {
 
     }
 
-    private void validateDates() throws InvalidDateRangeException {
+   private void validateDates() {
+        String dateFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+        try {
+            Date start = sdf.parse(startVacationDate);
+            Date end = sdf.parse(endVacationDate);
+            assert end != null;
+            if(end.before(start)){
+                Toast.makeText(VacationDetail.this,"Start date must be before end date!",
+                        Toast.LENGTH_LONG).show();
+                this.finish();
 
-        if (!vacationCalendarStart.before(vacationCalendarEnd)) {
-            throw new InvalidDateRangeException("Start date must be before end date");
+            }
+        }catch (ParseException e){
+            e.printStackTrace();
         }
+
     }
 
-    public class InvalidDateRangeException extends Exception {
-        public InvalidDateRangeException(String message) {
-            super(message);
-        }
 
-    }
+
 }
