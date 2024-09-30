@@ -48,6 +48,7 @@ public class ExcursionDetail extends AppCompatActivity {
     Date minDate = null;
     Date maxDate = null;
     final Calendar vacationCalendarStart = Calendar.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +112,7 @@ public class ExcursionDetail extends AppCompatActivity {
             }
         });
 
-        startDate  = (view, year, monthOfYear, dayOfMonth) -> {
+        startDate = (view, year, monthOfYear, dayOfMonth) -> {
             vacationCalendarStart.set(Calendar.YEAR, year);
             vacationCalendarStart.set(Calendar.MONTH, monthOfYear);
             vacationCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -177,7 +178,7 @@ public class ExcursionDetail extends AppCompatActivity {
                 else
                     excursionID = repository.getAllExcursions().get(repository.getAllExcursions().size() - 1).getExcursionID() + 1;
                 excursion = new Excursion(0, editName.getText().toString(),
-                        editDate.getText().toString(), vacationID,vacationStartDate,vacationEndDate);
+                        editDate.getText().toString(), vacationID, vacationStartDate, vacationEndDate);
                 repository.insert(excursion);
             } else {
                 //boolean isInRange = checker.validateDates(excursionDate,startVacationDate,endVacationDate);
@@ -199,7 +200,7 @@ public class ExcursionDetail extends AppCompatActivity {
                     }else{*/
                 excursion = new Excursion(excursionID, editName.getText().toString(),
                         editDate.getText().toString(), vacationID,
-                        vacationStartDate,vacationEndDate);
+                        vacationStartDate, vacationEndDate);
                 repository.update(excursion);
             }
             this.finish();

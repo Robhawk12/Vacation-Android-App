@@ -53,6 +53,7 @@ public class VacationsList extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_vacationdetails, menu);
         return true;
     }
+
     @Override
     protected void onResume() {
 
@@ -65,6 +66,7 @@ public class VacationsList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vacationAdapter.setmVacations(allVacations);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         List<Vacation> allVacations = repository.getAllVacations();
@@ -73,10 +75,10 @@ public class VacationsList extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.vacation) {
-            repository=new Repository(getApplication());
+            repository = new Repository(getApplication());
 
 
-            Vacation vacation=new Vacation(0,"Hawaii","Beach Surf","01/02/2025","01/10/2025");
+            Vacation vacation = new Vacation(0, "Hawaii", "Beach Surf", "01/02/2025", "01/10/2025");
             repository.insert(vacation);
             repository.getAllVacations();
 

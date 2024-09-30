@@ -17,62 +17,64 @@ import d308.robertjohnson.vacationplanner.entities.Excursion;
 
 public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.ExcursionViewHolder> {
 
-    class ExcursionViewHolder extends RecyclerView.ViewHolder{
+    class ExcursionViewHolder extends RecyclerView.ViewHolder {
         private final TextView excursionItemView;
         private final TextView excursionItemView2;
-        private ExcursionViewHolder(View itemView){
+
+        private ExcursionViewHolder(View itemView) {
             super(itemView);
-            excursionItemView=itemView.findViewById(R.id.textView2);
-            excursionItemView2=itemView.findViewById(R.id.textView3);
+            excursionItemView = itemView.findViewById(R.id.textView2);
+            excursionItemView2 = itemView.findViewById(R.id.textView3);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position=getAdapterPosition();
-                    final Excursion current=mExcursions.get(position);
-                    Intent intent=new Intent(context, ExcursionDetail.class);
+                    int position = getAdapterPosition();
+                    final Excursion current = mExcursions.get(position);
+                    Intent intent = new Intent(context, ExcursionDetail.class);
                     intent.putExtra("id", current.getExcursionID());
                     intent.putExtra("name", current.getExcursionName());
                     intent.putExtra("date", current.getExcursionDate());
-                    intent.putExtra("vacationID",current.getVacationID());
-                    intent.putExtra("startDate",current.getVacationStartDate());
-                    intent.putExtra("endDate",current.getVacationEndDate());
+                    intent.putExtra("vacationID", current.getVacationID());
+                    intent.putExtra("startDate", current.getVacationStartDate());
+                    intent.putExtra("endDate", current.getVacationEndDate());
                     context.startActivity(intent);
                 }
             });
         }
     }
+
     private List<Excursion> mExcursions;
     private final Context context;
     private final LayoutInflater mInflater;
 
-    public ExcursionAdapter(Context context){
+    public ExcursionAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
     }
+
     @NonNull
     @Override
     public ExcursionAdapter.ExcursionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView =mInflater.inflate(R.layout.excursion_list_item,parent,false);
+        View itemView = mInflater.inflate(R.layout.excursion_list_item, parent, false);
         return new ExcursionViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ExcursionAdapter.ExcursionViewHolder holder, int position) {
-        if(mExcursions != null){
-            Excursion current=mExcursions.get(position);
+        if (mExcursions != null) {
+            Excursion current = mExcursions.get(position);
             String name = current.getExcursionName();
-           String date = current.getExcursionDate();
-;           //int vacationID = current.getVacationID();
+            String date = current.getExcursionDate();
             holder.excursionItemView.setText(name);
             holder.excursionItemView2.setText(date);
-        }
-        else {
+        } else {
             holder.excursionItemView.setText("No excursion name");
             holder.excursionItemView2.setText("No date set");
         }
 
     }
-    public void setExcursions(List<Excursion> excursions){
+
+    public void setExcursions(List<Excursion> excursions) {
         mExcursions = excursions;
         notifyDataSetChanged();
     }

@@ -116,10 +116,10 @@ public class VacationDetail extends AppCompatActivity {
         editStartDate.setOnClickListener(v -> {
             Date date;
             String def = editStartDate.getText().toString();
-            if(def.equals(""))def="01/01/25";
-            try{
+            if (def.equals("")) def = "01/01/25";
+            try {
                 vacationCalendarStart.setTime(sdf.parse(def));
-            }catch (ParseException e){
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
             new DatePickerDialog(VacationDetail.this, startVacDate, vacationCalendarStart
@@ -159,6 +159,7 @@ public class VacationDetail extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_vacationdetails, menu);
         return true;
     }
+
     private void scheduleAlarm(AlarmManager alarmManager, long triggerTime, String message, int notificationId) {
         Intent intent = new Intent(VacationDetail.this, VacationBCReceiver.class);
         intent.putExtra("show", message);
@@ -192,27 +193,7 @@ public class VacationDetail extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.vacationsave) {
-            //validateDates();
-            /*if (validateDates() == 1){
-                VacationDetail.this.finish();
-            }*/
-            startVacationDate =  editStartDate.getText().toString();
-            endVacationDate = editEndDate.getText().toString();
-            String dateFormat = "MM/dd/yy";
-            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
-            try {
-                Date s  = sdf.parse(startVacationDate);
-                Date e  = sdf.parse(endVacationDate);
-                //assert e != null;
-                if(e.before(s )){
-                    Toast.makeText(VacationDetail.this,"Start date must be before end date!",
-                            Toast.LENGTH_LONG).show();
-                    this.finish();
-
-                }
-            }catch (ParseException e){
-                e.printStackTrace();
-            }
+            validateDates();
             Vacation vacation;
             if (vacationID == -1) {
                 if (repository.getAllVacations().size() == 0) vacationID = 1;
@@ -272,7 +253,7 @@ public class VacationDetail extends AppCompatActivity {
                         intent, PendingIntent.FLAG_IMMUTABLE);
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, trig, pendingIntent);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -294,12 +275,12 @@ public class VacationDetail extends AppCompatActivity {
             }
             assert vacaEndDate != null;
             Long trig = vacaEndDate.getTime();
-            Intent intent =new Intent(VacationDetail.this,VacationBCReceiver.class);
-            intent.putExtra("vackey","Sorry! Your vacation to "+vacName+" ends today "+date+".");
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(VacationDetail.this,++MainActivity.excAlert,
-                    intent,PendingIntent.FLAG_IMMUTABLE);
+            Intent intent = new Intent(VacationDetail.this, VacationBCReceiver.class);
+            intent.putExtra("vackey", "Sorry! Your vacation to " + vacName + " ends today " + date + ".");
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(VacationDetail.this, ++MainActivity.excAlert,
+                    intent, PendingIntent.FLAG_IMMUTABLE);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP,trig,pendingIntent);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, trig, pendingIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -322,25 +303,26 @@ public class VacationDetail extends AppCompatActivity {
 
     }
 
-   private void validateDates() {
+    private void validateDates() {
+        startVacationDate = editStartDate.getText().toString();
+        endVacationDate = editEndDate.getText().toString();
         String dateFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
         try {
             Date start = sdf.parse(startVacationDate);
             Date end = sdf.parse(endVacationDate);
             assert end != null;
-            if(end.before(start)){
-                Toast.makeText(VacationDetail.this,"Start date must be before end date!",
+            if (end.before(start)) {
+                Toast.makeText(VacationDetail.this, "Start date must be before end date!",
                         Toast.LENGTH_LONG).show();
                 this.finish();
 
             }
-        }catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
     }
-
 
 
 }
