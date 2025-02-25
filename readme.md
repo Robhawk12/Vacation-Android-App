@@ -48,6 +48,4 @@ Select share from the menu. This will open a sharing dialog from your device to 
 
 The signed APK is deployed to Android version 8.2.2.
 
-**Link to the Git Repository**
 
-https://gitlab.com/wgu-gitlab-environment/student-repos/rjo1275/d308-mobile-application-development-android.git  
